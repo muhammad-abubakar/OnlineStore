@@ -11,7 +11,7 @@ roles = [Role::ADMIN, Role::USER, Role::GUEST].collect do |name|
 end
 
 ["admin@admin.com","user@user.com"].each_with_index do |email, i|
-  User.create!(email: email, password: '123456', password_confirmation: '123456', name: 'test_name#{i}', role: roles[i] )
+  User.create!(email: email, password: '123456', password_confirmation: '123456', name: "test_name#{i}", role: roles[i] )
 end
 
 ["car","phone"].each do |name|
