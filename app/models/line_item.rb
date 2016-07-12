@@ -16,7 +16,7 @@ class LineItem < ActiveRecord::Base
   end
 
   def is_valid_quantity?
-    (quantity > 0 && product.quantity > quantity)
+    (quantity > 0 && product.quantity >= quantity)
   end
 
   def prachase_quantity
