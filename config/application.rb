@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module BankingSystem
+module OnlineStore
   class Application < Rails::Application
   
     config.generators.fixture_replacement :factory_girl, dir: 'spec/factories'
