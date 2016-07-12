@@ -20,4 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    quantity_availability_error: "Quantity not valid"
+  success:
+    product_created_successfully: "Product was successfully created"

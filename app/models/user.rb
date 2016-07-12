@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
 
   validates_presence_of :name
+  
   before_save :assign_role
 
   def assign_role

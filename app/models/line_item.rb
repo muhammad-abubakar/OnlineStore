@@ -2,7 +2,7 @@ class LineItem < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
 
-  validates_associated :products
+  validates_associated :product,:user
   validate :price_greater_than_zero
   validate :prachase_quantity
 
@@ -16,11 +16,11 @@ class LineItem < ActiveRecord::Base
   end
 
   def is_valid_quantity?
-    (quantity > 0 && products.quantity > quantity)
+    (quantity > 0 && product.quantity > quantity)
   end
 
   def prachase_quantity
-    errors.add(:quantity,"Quantity not valid") unless is_valid_quantity? 
+    errors.add(:quantity, I18n.t('errors.quantity_availability_error')) unless is_valid_quantity? 
   end
 
   def price_greater_than_zero
