@@ -36,8 +36,17 @@ gem 'cancancan', '~> 1.10'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'guard-rspec', '4.5.0'
+  gem 'launchy'
 end
 
 group :development do

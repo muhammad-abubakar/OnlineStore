@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    self.role.name == "Admin"
+    self.role.name == Role::ADMIN
+  end
+
+  def guest?
+    self.role.name == Role::GUEST
   end
 end
