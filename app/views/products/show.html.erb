@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 
 <p>
   <strong>Name:</strong>
@@ -15,5 +15,32 @@
   <%= @product.quantity %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
+<table>
+  <thead>
+    <tr>
+      <th>Price | </th> 
+      <th>Sold to |</th> 
+      <th>Quantity |</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @product.line_items.each do |line_item| %>
+      <tr>
+        <td><%= line_item.price %> | </td> 
+        <td><%= line_item.user.name %> |</td>
+        <td><%= line_item.quantity %> |</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<br/>
+
+
+<td><%= link_to_if(can?(:edit, @product), "Purchase", new_product_line_item_path(@product)) %></td>
+
+<td><%= link_to_if(can?(:edit, @product), "Edit", edit_product_path(@product)) %></td>
+
+
 <%= link_to 'Back', products_path %>

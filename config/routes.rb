@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   root to: "home#landing_page"
   
-  resources :line_items
-  resources :products
   devise_for :users
   resources :roles
   resources :users
 
   resources :home do
     get 'landing_page', on: :member
+  end
+
+  resources :products do
+    resources :line_items
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

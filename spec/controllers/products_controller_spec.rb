@@ -16,25 +16,21 @@ describe ProductsController, type: :controller do
       expect(response).to render_template("index")
     end
 
-    it "creates new Product" do
+    it "create new Product" do
       expect{
         post :create, product: FactoryGirl.attributes_for(:product, user_id: admin.id)
         }.to change(Product, :count).by(1)
     end
 
-    it "updates any Product" do
+    it "update any Product" do
       put :update, id: product, product: FactoryGirl.attributes_for(:product, quantity: 101)
       product.reload
       expect(product.quantity).to be(101)
     end
 
-    it "deletes any Product" do
+    it "delete any Product" do
       new_product = FactoryGirl.create(:product, user: user)
       expect { delete :destroy, id: new_product }.to change(Product, :count).by(-1)
-    end
-
-    after :all do
-      sign_out admin
     end
   end
 
@@ -49,13 +45,13 @@ describe ProductsController, type: :controller do
       expect(response).to render_template("index")
     end
 
-    it "creates new Product" do
+    it "create new Product" do
       expect{
         post :create, product: FactoryGirl.attributes_for(:product, user_id: user.id)
         }.to change(Product, :count).by(1)
     end
 
-    it "updates its own Product" do
+    it "update its own Product" do
       product = FactoryGirl.create(:product, user: user)
       put :update, id: product, product: FactoryGirl.attributes_for(:product, quantity: 101)
       product.reload
@@ -67,10 +63,6 @@ describe ProductsController, type: :controller do
       put :update, id: product, product: FactoryGirl.attributes_for(:product, quantity: 101)
       expect(response.body).to match /redirected/ 
     end
-
-    after :all do
-      sign_out user
-    end
   end
 
   describe "Guest" do
@@ -79,10 +71,15 @@ describe ProductsController, type: :controller do
       expect(response).to render_template("index")
     end
 
-    it "cannot creates new Product" do
+    it "cannot create new Product" do
       expect{
         post :create, product: FactoryGirl.attributes_for(:product, user_id: guest.id)
         }.to change(Product, :count).by(0)
+    end
+
+    it "cannot delete product" do
+      new_product = FactoryGirl.create(:product, user: user)
+      expect { delete :destroy, id: new_product }.to change(Product, :count).by(0)
     end
   end
 end
