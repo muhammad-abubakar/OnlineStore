@@ -20,7 +20,7 @@ FactoryGirl.define do
     password_confirmation '123456'
   end
 
-  factory :guest do
+  factory :guest, class: User do
     name  Faker::Name.name 
     email Faker::Internet.email
     age   20

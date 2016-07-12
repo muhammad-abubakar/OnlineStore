@@ -1,7 +1,8 @@
 describe ProductsController, type: :controller do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user)  { FactoryGirl.create(:user) }
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:guest) { FactoryGirl.create(:guest) }
   describe "Admin" do
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
@@ -30,6 +31,10 @@ describe ProductsController, type: :controller do
     it "deletes any Product" do
       new_product = FactoryGirl.create(:product, user: user)
       expect { delete :destroy, id: new_product }.to change(Product, :count).by(-1)
+    end
+
+    after :all do
+      sign_out admin
     end
   end
 
@@ -61,6 +66,23 @@ describe ProductsController, type: :controller do
       product = FactoryGirl.create(:product, user: FactoryGirl.create(:admin))
       put :update, id: product, product: FactoryGirl.attributes_for(:product, quantity: 101)
       expect(response.body).to match /redirected/ 
+    end
+
+    after :all do
+      sign_out user
+    end
+  end
+
+  describe "Guest" do
+    it "lists all products" do
+      get :index
+      expect(response).to render_template("index")
+    end
+
+    it "cannot creates new Product" do
+      expect{
+        post :create, product: FactoryGirl.attributes_for(:product, user_id: guest.id)
+        }.to change(Product, :count).by(0)
     end
   end
 end

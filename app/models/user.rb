@@ -15,14 +15,18 @@ class User < ActiveRecord::Base
   before_save :assign_role
 
   def assign_role
-    self.role = Role.find_by name: Role::USER if self.role.nil?
+    role = Role.find_by name: Role::USER if self.role.nil?
   end
 
   def admin?
-    self.role.name == Role::ADMIN
+    role.try(:name) == Role::ADMIN
+  end
+
+  def user?
+    role.try(:name) == Role::ADMIN 
   end
 
   def guest?
-    self.role.name == Role::GUEST
+    role.nil? || role.name == Role::GUEST
   end
 end
