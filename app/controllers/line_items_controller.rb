@@ -2,8 +2,7 @@ class LineItemsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   load_and_authorize_resource :product
   load_and_authorize_resource :line_item, through: :product
-
-
+  
   # POST /line_items
   # POST /line_items.json
   def create
